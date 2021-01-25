@@ -1,0 +1,13 @@
+hostinfo: hostinfo.o csapp.o
+	gcc -o hostinfo hostinfo.o csapp.o -lpthread
+csapp.o: csapp.c csapp.h
+	gcc -c csapp.c csapp.h
+hostinfo.o: csapp.h hostinfo.c
+	gcc -c csapp.h hostinfo.c
+
+# tiny: tiny.o csapp.o
+# 	gcc -o tiny tiny.o csapp.o -lpthread
+# csapp.o: csapp.c csapp.h
+# 	gcc -c csapp.c csapp.h
+# tiny.o: csapp.h tiny.c
+# 	gcc -c csapp.h tiny.c
