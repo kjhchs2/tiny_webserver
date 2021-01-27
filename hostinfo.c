@@ -22,8 +22,10 @@ int main(int argc, char **argv)
         fprintf(stderr, "getaddrinfo error: %s\n", gai_strerror(rc));
         exit(1);
     }
+    printf("%p", listp);
+
     flags = NI_NUMERICHOST; //Display address string instead of domain name
-    printf("## %d\n",flags);
+    // printf("## %d\n",flags);
     for (p = listp; p; p = p->ai_next){
         //printf("# %s\n",buf); // buf
         Getnameinfo(p->ai_addr, p->ai_addrlen, buf, MAXLINE, NULL, 0, flags);

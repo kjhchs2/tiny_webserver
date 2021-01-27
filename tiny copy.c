@@ -174,7 +174,7 @@ void read_requesthdrs(rio_t *rp)
 
     Rio_readlineb(rp, buf, MAXLINE); // MAXLINE 까지 읽기
 
-    while (strcmp(buf, "\r\n")) // 개행문자 만날 때까지 계속 읽기
+    while (strcmp(buf, "\r\n")) // eof(한 줄이 전체가 개행문자인 곳) 만날 때까지 계속 읽기
     {
         Rio_readlineb(rp, buf, MAXLINE);
         printf("%s", buf);
@@ -189,7 +189,7 @@ int parse_uri(char *uri, char *filename, char *cgiargs)
     if (!strstr(uri, "cgi-bin")) /* Static content */
     {
         strcpy(cgiargs, "");
-        strcpy(filename, "."); // ./uri/home.html 가 된다.
+        strcpy(filename, ".");   // ./home.html 가 된다.
         strcat(filename, uri);
         if (uri[strlen(uri) - 1] == '/')
             strcat(filename, "home.html");
@@ -245,7 +245,7 @@ void serve_static(int fd, char *filename, int filesize)
     Close(srcfd);
     Rio_writen(fd, srcp, filesize);
     //대응시킨 녀석을 풀어준다. 유효하지 않은 메모리로 만듦
-    // void *mmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+    // void *mmap(void *start, size_t/ length, int prot, int flags, int fd, off_t offset);
     // int munmap(void *start, size_t length);
     Munmap(srcp, filesize);
 }
